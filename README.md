@@ -2,9 +2,7 @@
 
 <p align="center">
  
-  <a href="https://github.com/camisbrussi/SistemaEventos_API/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/camisbrussi/SistemaEventos_API">
-  </a>
+
 
 </p>
 
