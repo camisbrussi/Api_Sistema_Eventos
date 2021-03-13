@@ -1,0 +1,73 @@
+import Sequelize, { Model } from "sequelize";
+
+const validarCpf = require("validar-cpf");
+
+export default class Customer extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        name: {
+          type: Sequelize.STRING,
+          allowNull: true,
+          validate: {
+            len: {
+              args: [3, 255],
+              msg: "Campo nome deve ter entre 3 e 255 caracteres",
+            },
+          },
+        },
+        cpf: {
+          type: Sequelize.STRING(11),
+          defaultValue: '',
+          unique: {
+            msg: "cpf já cadastrado",
+          },
+          validate: {
+            customValidator(value) {
+              if (!validarCpf(value)) {
+                throw new Error("CPF inválido");
+              }
+            },
+          },
+        },
+        birth_date: {
+          type: Sequelize.DATEONLY,
+          defaultValue: '',
+          validate: {
+            isDate: {
+              msg: "Data Inválida",
+            },
+          },
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: true,
+          validate: {
+            isEmail: {
+              msg: "E-mail inválido",
+            },
+          },
+        },
+        phone: {
+          type: Sequelize.STRING(11),
+          allowNull: true,
+          validate: {
+            len: {
+              args: [10, 11],
+              msg: "Telefone inválido",
+            },
+          },
+        },
+      },
+      {
+        sequelize,
+      }
+    );
+    return this;
+  }
+  
+
+  birth_dateIsValid(birth_date) {
+    return birth_date == this.birth_date ? true: false;
+  }
+}
